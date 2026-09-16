@@ -1,0 +1,65 @@
+{
+  "paper_id": "fox-hedgehog-prototype",
+  "claims": [
+    {
+      "claim_id": "C001",
+      "claim": "The study analyzes 7.13 million scholars and 61.16 million author-year observations across 19 disciplines using MAG/SciSciNet data from 1900 to 2021.",
+      "type": "FACT",
+      "sources": [{"section": null, "page": null, "figure": null, "table": null, "paragraph_id": null, "quote": null, "value": {"authors": 7130000, "author_years": 61160000, "disciplines": 19, "period": "1900-2021"}, "asset_path": null}],
+      "confidence": "direct",
+      "allowed_visualization": ["animated_number", "typography", "schematic"],
+      "generative_visual_allowed": false,
+      "notes": "Provisional source from current project summary; replace with manuscript page provenance."
+    },
+    {
+      "claim_id": "C002",
+      "claim": "The framework distinguishes breadth in scholars' knowledge bases from breadth in the research topics they pursue.",
+      "type": "THEORETICAL_CLAIM",
+      "sources": [{"section": null, "page": null, "figure": null, "table": null, "paragraph_id": null, "quote": null, "value": null, "asset_path": null}],
+      "confidence": "direct",
+      "allowed_visualization": ["schematic", "typography", "cinematic"],
+      "generative_visual_allowed": true,
+      "notes": "Prototype mapping."
+    },
+    {
+      "claim_id": "C003",
+      "claim": "Greater knowledge-base breadth is associated with greater integrative novelty and lower disruption.",
+      "type": "EMPIRICAL_RESULT",
+      "sources": [{"section": null, "page": null, "figure": null, "table": null, "paragraph_id": null, "quote": null, "value": {"KB_to_integrative_novelty": "positive", "KB_to_disruption": "negative"}, "asset_path": null}],
+      "confidence": "direct",
+      "allowed_visualization": ["animated_text", "schematic", "deterministic_chart"],
+      "generative_visual_allowed": false,
+      "notes": "Replace with exact table/figure and estimates from manuscript."
+    },
+    {
+      "claim_id": "C004",
+      "claim": "Greater research-topic breadth is associated with greater disruption and lower integrative novelty.",
+      "type": "EMPIRICAL_RESULT",
+      "sources": [{"section": null, "page": null, "figure": null, "table": null, "paragraph_id": null, "quote": null, "value": {"RT_to_disruption": "positive", "RT_to_integrative_novelty": "negative"}, "asset_path": null}],
+      "confidence": "direct",
+      "allowed_visualization": ["animated_text", "schematic", "deterministic_chart"],
+      "generative_visual_allowed": false,
+      "notes": "Replace with exact table/figure and estimates from manuscript."
+    },
+    {
+      "claim_id": "C005",
+      "claim": "The reported comparison shows a Fox share of 53.6% in the United States and 40.5% in China.",
+      "type": "EMPIRICAL_RESULT",
+      "sources": [{"section": null, "page": null, "figure": null, "table": null, "paragraph_id": null, "quote": null, "value": {"US_fox_share": 0.536, "China_fox_share": 0.405}, "asset_path": null}],
+      "confidence": "direct",
+      "allowed_visualization": ["animated_number", "deterministic_chart", "typography"],
+      "generative_visual_allowed": false,
+      "notes": "Prototype values from current project summary; page-level manuscript evidence still required."
+    },
+    {
+      "claim_id": "C006",
+      "claim": "Scientific breadth is not one-dimensional: breadth in knowledge sources and breadth in research topics can generate different forms of novelty.",
+      "type": "INTERPRETATION",
+      "sources": [{"section": null, "page": null, "figure": null, "table": null, "paragraph_id": null, "quote": null, "value": null, "asset_path": null}],
+      "confidence": "interpretive",
+      "allowed_visualization": ["schematic", "typography", "cinematic"],
+      "generative_visual_allowed": true,
+      "notes": "Interpretive takeaway to be checked against manuscript wording."
+    }
+  ]
+}
