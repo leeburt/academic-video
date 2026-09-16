@@ -1,0 +1,25 @@
+{
+  "project": "Fox and Hedgehog",
+  "status": "prototype_from_current_research_summary",
+  "research_question": "How do scientists' breadth strategies in knowledge bases and research topics relate to different forms of scientific novelty and disruption?",
+  "data": {
+    "source": "MAG / SciSciNet",
+    "period": "1900-2021",
+    "authors": 7130000,
+    "author_year_observations": 61160000,
+    "disciplines": 19
+  },
+  "core_constructs": {
+    "KB": "breadth of knowledge base",
+    "RT": "breadth of research topics",
+    "types": ["Fox", "Hedgehog", "Foxy Hedgehog", "Hedgehoggy Fox"]
+  },
+  "reported_findings": [
+    "Greater knowledge-base breadth is associated with higher integrative novelty and lower disruption.",
+    "Greater research-topic breadth is associated with higher disruption and lower integrative novelty.",
+    "The analysis identifies a Fox premium across key outcomes.",
+    "In the reported comparison, the United States has a higher Fox share than China."
+  ],
+  "methods": ["author fixed effects", "year fixed effects", "double machine learning", "CATE", "historical strategy window t-3 to t-1"],
+  "warning": "This prototype is based on the current project summary, not page-level extraction from the manuscript. Replace provisional evidence entries after the paper PDF is added."
+}
