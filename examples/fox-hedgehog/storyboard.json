@@ -1,0 +1,83 @@
+{
+  "title": "Foxes, Hedgehogs, and Scientific Novelty",
+  "target_duration": 75,
+  "scenes": [
+    {
+      "scene_id": "S01",
+      "duration": 7,
+      "narration": "Are the most innovative scientists specialists, or intellectual explorers?",
+      "claim_ids": ["C006"],
+      "visual_intent": "Open with a clean contrast between a narrow specialist path and a branching exploratory path.",
+      "visual_type": "cinematic",
+      "renderer": "video_model",
+      "assets": [],
+      "notes": "Conceptual only; no empirical evidence shown."
+    },
+    {
+      "scene_id": "S02",
+      "duration": 10,
+      "narration": "We separate two kinds of breadth: the breadth of knowledge a scientist draws on, and the breadth of research topics that scientist pursues.",
+      "claim_ids": ["C002"],
+      "visual_intent": "Animate two orthogonal dimensions labeled Knowledge Base and Research Topics.",
+      "visual_type": "concept_diagram",
+      "renderer": "hyperframes",
+      "assets": [],
+      "notes": null
+    },
+    {
+      "scene_id": "S03",
+      "duration": 9,
+      "narration": "The study follows 7.13 million scholars, 61.16 million author-year observations, and 19 disciplines from 1900 to 2021.",
+      "claim_ids": ["C001"],
+      "visual_intent": "Reveal the sample statistics as deterministic animated typography over a restrained publication-style timeline.",
+      "visual_type": "data_visualization",
+      "renderer": "hyperframes",
+      "assets": [],
+      "notes": "Exact values only."
+    },
+    {
+      "scene_id": "S04",
+      "duration": 12,
+      "narration": "Broader knowledge bases are associated with more integrative novelty, but less disruption.",
+      "claim_ids": ["C003"],
+      "visual_intent": "Use a deterministic two-arrow result diagram: Knowledge-base breadth up; integrative novelty up; disruption down.",
+      "visual_type": "data_visualization",
+      "renderer": "hyperframes",
+      "assets": [],
+      "notes": "Replace schematic with exact effect visualization after manuscript figures are ingested."
+    },
+    {
+      "scene_id": "S05",
+      "duration": 12,
+      "narration": "Topic breadth shows the opposite pattern: it is associated with greater disruption, but lower integrative novelty.",
+      "claim_ids": ["C004"],
+      "visual_intent": "Mirror the prior scene with Research-topic breadth up; disruption up; integrative novelty down.",
+      "visual_type": "data_visualization",
+      "renderer": "hyperframes",
+      "assets": [],
+      "notes": "Evidence-bearing scene; no generative chart."
+    },
+    {
+      "scene_id": "S06",
+      "duration": 10,
+      "narration": "The prevalence of fox-like strategies also differs across national science systems: 53.6 percent in the United States and 40.5 percent in China in the reported comparison.",
+      "claim_ids": ["C005"],
+      "visual_intent": "Show two deterministic bars with exact labels, United States 53.6% and China 40.5%.",
+      "visual_type": "data_visualization",
+      "renderer": "hyperframes",
+      "assets": [],
+      "notes": "Do not imply causality from the country comparison."
+    },
+    {
+      "scene_id": "S07",
+      "duration": 10,
+      "narration": "The takeaway is that scientific breadth is not a single strategy. Where scholars search for knowledge and how widely they move across topics can shape different forms of novelty.",
+      "claim_ids": ["C006"],
+      "visual_intent": "Bring the two breadth axes back together and end on a clean two-dimensional framework.",
+      "visual_type": "typography",
+      "renderer": "hyperframes",
+      "assets": [],
+      "notes": "Interpretive close; verify wording against final manuscript."
+    }
+  ]
+}
