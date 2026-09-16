@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Academic Video Storyboard",
+  "type": "object",
+  "required": ["title", "target_duration", "scenes"],
+  "properties": {
+    "title": {"type": "string"},
+    "target_duration": {"type": "number", "minimum": 1},
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scene_id", "duration", "narration", "claim_ids", "visual_type", "renderer"],
+        "properties": {
+          "scene_id": {"type": "string"},
+          "duration": {"type": "number", "minimum": 0.5},
+          "narration": {"type": "string"},
+          "claim_ids": {"type": "array", "items": {"type": "string"}},
+          "visual_intent": {"type": "string"},
+          "visual_type": {
+            "type": "string",
+            "enum": ["paper_evidence", "data_visualization", "concept_diagram", "method_animation", "cinematic", "typography"]
+          },
+          "renderer": {"type": "string", "enum": ["hyperframes", "manim", "video_model", "direct_asset"]},
+          "assets": {"type": "array", "items": {"type": "string"}},
+          "notes": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
