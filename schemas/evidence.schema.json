@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/evidence.schema.json",
+  "title": "Academic Video Evidence Map",
+  "type": "object",
+  "required": ["paper_id", "claims"],
+  "properties": {
+    "paper_id": {"type": "string"},
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "claim", "type", "sources", "generative_visual_allowed"],
+        "properties": {
+          "claim_id": {"type": "string", "pattern": "^C[0-9]{3,}$"},
+          "claim": {"type": "string", "minLength": 1},
+          "type": {
+            "type": "string",
+            "enum": [
+              "FACT",
+              "METHOD",
+              "EMPIRICAL_RESULT",
+              "THEORETICAL_CLAIM",
+              "INTERPRETATION",
+              "LIMITATION",
+              "BACKGROUND",
+              "METAPHOR"
+            ]
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "section": {"type": ["string", "null"]},
+                "page": {"type": ["integer", "null"], "minimum": 1},
+                "figure": {"type": ["string", "null"]},
+                "table": {"type": ["string", "null"]},
+                "equation": {"type": ["string", "null"]},
+                "paragraph_id": {"type": ["string", "null"]},
+                "quote": {"type": ["string", "null"]},
+                "value": {},
+                "asset_path": {"type": ["string", "null"]}
+              },
+              "additionalProperties": true
+            }
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["direct", "derived", "interpretive", "uncertain"]
+          },
+          "allowed_visualization": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "original_figure",
+                "original_table",
+                "page_crop",
+                "animated_text",
+                "animated_number",
+                "deterministic_chart",
+                "schematic",
+                "method_animation",
+                "cinematic",
+                "typography"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "generative_visual_allowed": {"type": "boolean"},
+          "notes": {"type": ["string", "null"]}
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {"enum": ["EMPIRICAL_RESULT", "METHOD"]}
+              }
+            },
+            "then": {
+              "properties": {
+                "generative_visual_allowed": {"const": false},
+                "sources": {"minItems": 1}
+              }
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
