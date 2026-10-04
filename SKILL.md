@@ -1,191 +1,196 @@
-# Academic Video Skill
+---
+name: academic-video
+description: Orchestrate an evidence-grounded workflow for turning academic papers into short research videos. Delegate paper analysis, script writing, storyboard design, production, and QA to specialist skills.
+---
 
-## Purpose
+# Academic Video Orchestrator
 
-Turn an academic paper into a short, evidence-grounded research video.
+## Goal
 
-The skill must preserve scholarly accuracy. It may simplify exposition, but it must never invent empirical evidence, coefficients, figures, tables, sample sizes, methods, or causal claims.
+Turn an academic paper into an accurate, clear, engaging research video without flattening it into a paper summary.
 
-## Operating principles
+The orchestrator owns workflow order and handoffs. Specialist skills own domain-specific reasoning.
 
-1. Parse before summarizing.
-2. Build an evidence map before writing narration.
-3. Every empirical claim must link to a paper source.
-4. Separate evidence-bearing visuals from explanatory or cinematic visuals.
-5. Prefer deterministic rendering for numbers, tables, figures, methods, and equations.
-6. Use generative video only for contextual, metaphorical, or non-evidence scenes.
-7. Run academic QA before final export.
+## Highest-priority rules
 
-## Required workflow
+1. **Evidence decides what can be said.**
+2. **The viewer's question decides when it should be said.**
+3. **Use the paper's native tension before inventing a story.**
+4. **Never use generative video to fabricate empirical evidence.**
+5. **Do not begin expensive rendering before the script is locked.**
 
-### Stage 1 — Parse the paper
-Extract:
-- title
-- authors
-- abstract
-- section hierarchy
-- paragraphs with page provenance
-- figures and captions
-- tables and captions
-- equations where available
-- references where available
+## Default workflow
 
-Preferred tools:
-- Docling for structure
-- PyMuPDF for page geometry, rendering, and crops
+```text
+Paper
+  ↓
+1. Paper & Evidence
+  ↓
+2. Narrative & Script
+  ↓
+3. Storyboard
+  ↓
+4. Production
+  ↓
+5. QA & Export
+```
 
-Output: `paper.json`
+## Specialist skills
 
-### Stage 2 — Build the research map
-Identify:
-- research question
-- theoretical motivation
-- data/sample
-- period/population
-- identification strategy / method
-- main findings
-- mechanisms
-- heterogeneity
-- robustness
-- limitations
-- contribution
+Use the relevant specialist when entering each stage:
 
-Output: `research_map.json`
+- `skills/academic-paper-evidence/SKILL.md`
+- `skills/academic-video-script/SKILL.md`
+- `skills/academic-video-storyboard/SKILL.md`
+- `skills/academic-video-production/SKILL.md`
+- `skills/academic-video-qa/SKILL.md`
 
-### Stage 3 — Build the evidence map
-For each claim, create a stable claim ID and attach source provenance.
+Shared schemas and design references live in `schemas/` and `references/`.
 
-Claim classes:
-- FACT
-- METHOD
-- EMPIRICAL_RESULT
-- THEORETICAL_CLAIM
-- INTERPRETATION
-- LIMITATION
-- BACKGROUND
-- METAPHOR
+## Stage gates
 
-Rules:
-- EMPIRICAL_RESULT requires direct evidence.
-- METHOD requires direct evidence.
-- FACT should have evidence whenever paper-derived.
-- METAPHOR may be unsupported but must not be presented as empirical evidence.
+### Gate 1 — Evidence ready
+Do not write the final narration until:
+- core research question is identified;
+- major empirical claims have stable claim IDs;
+- empirical results and methods have direct provenance;
+- causal strength and limitations are known.
 
-Each claim should specify whether generative visuals are allowed.
+Expected outputs:
+- `paper.json`
+- `evidence_map.json`
 
-Output: `evidence_map.json`
+### Gate 2 — Script ready
+Do not storyboard until:
+- one core audience question is chosen;
+- the viewer promise is explicit;
+- the paper's native tension has been tested;
+- findings form a progressive argument rather than a list;
+- script QA passes;
+- `script.lock.md` exists.
 
-### Stage 4 — Plan the narrative
-Create a concise narrative appropriate for the target duration.
+Expected outputs:
+- `narrative_plan.json`
+- `script.md`
+- `script.lock.md`
 
-Default structure for a 60–120 second research video:
-1. Hook / research question
-2. Why the question matters
-3. Data
-4. Method / identification
-5. Finding 1
-6. Finding 2
-7. Finding 3 / mechanism
-8. Contribution / takeaway
+### Gate 3 — Storyboard ready
+Do not batch-render until:
+- narration timing is based on draft TTS or measured speech;
+- evidence-bearing shots use deterministic or source-faithful visuals;
+- scene/shot continuity is specified;
+- generative-video shots contain no empirical numbers, tables, or paper figures.
 
-Every narration unit must reference one or more claim IDs.
+Expected output:
+- `storyboard.json`
 
-Output: `narrative.json`
+### Gate 4 — Production ready
+Production may generate:
+- paper crops and extracted figures;
+- deterministic diagrams and charts;
+- method animation;
+- voice and captions;
+- contextual or metaphorical generative footage.
 
-### Stage 5 — Create the storyboard
-Convert the narrative into scenes.
+Expected outputs:
+- `assets/`
+- `manifest.json`
+- `draft.mp4`
 
-Each scene must include:
-- scene ID
-- duration
-- narration
-- claim IDs
-- visual intent
-- visual type
-- required assets
-- renderer
+### Gate 5 — Final QA
+Export `final.mp4` only after academic, narrative, visual, and technical checks pass.
 
-Output: `storyboard.json`
+## Default content budget for 60–120 seconds
 
-### Stage 6 — Route scenes
-Allowed renderer classes:
-- `paper_evidence`
-- `data_visualization`
-- `concept_diagram`
-- `method_animation`
-- `cinematic`
-- `typography`
+Use as a constraint, not a quota:
 
-Default routing:
-- empirical evidence -> deterministic renderer
-- paper figures/tables -> direct asset animation
-- methods/equations -> Manim or HyperFrames
-- concepts/mechanisms -> HyperFrames or Manim
-- contextual/metaphorical scenes -> optional generative video
-- titles/takeaways -> HyperFrames
+- 1 core question
+- 1 core tension
+- 2–3 major findings
+- 0–1 method explanation
+- 0–1 mechanism
+- 2–4 spoken numbers
+- 1 necessary limitation
+- 1 final takeaway
 
-Never route an empirical coefficient, table, figure, or sample statistic to a generative video renderer.
+## Default narrative policy
 
-### Stage 7 — Voice and captions
-Preferred:
-- Qwen3-TTS for production narration
-- edge-tts as MVP fallback
-- WhisperX for alignment
+Do not mechanically map paper sections into video sections.
 
-### Stage 8 — Compose
-Preferred:
-- HyperFrames for deterministic composition
-- FFmpeg for normalization, muxing, encoding, and final export
+Avoid:
+```text
+background → data → method → finding 1 → finding 2 → finding 3 → limitation
+```
 
-### Stage 9 — Academic QA
-Before final export, check:
-- every empirical narration claim is supported
-- numbers match source evidence
-- signs/directions match
-- figure/table identity matches
-- no unsupported causal upgrade
-- no generative visual is presented as empirical evidence
-- captions are synchronized
-- frames are valid
-- audio exists and is intelligible
+Prefer:
+```text
+question → expected answer → finding → surprise → new question → deeper finding → revised understanding
+```
 
-If a critical check fails, regenerate or revise the relevant scene rather than exporting the final video.
+If a paper already contains a strong empirical paradox, expectation reversal, unequal conversion, or escalating puzzle, use that as the narrative engine.
 
-## Output structure
+## Story policy
+
+`story_mode` is conditional, not required.
+
+A fictional story is justified only when it materially reduces abstraction or creates a question the paper later answers.
+
+Never use a fictional character's intentional action to stand in for a social mechanism the paper did not identify.
+
+## Default character IP
+
+If the project uses 勤劳牛 / 发疯马, treat them as cognitive interfaces rather than story protagonists:
+
+- 发疯马: ordinary intuition, fast judgment, common misunderstanding, skepticism.
+- 勤劳牛: evidence, anomaly detection, correction, cautious interpretation.
+
+They may ask, challenge, point, or explain. They must not replace evidence or embody an unverified causal mechanism.
+
+## Rendering policy
+
+Evidence-bearing content:
+- paper figure/table → source asset or deterministic animation;
+- coefficients/numbers → deterministic typography/chart;
+- methods/equations → deterministic animation;
+- concepts/mechanisms → deterministic diagram unless clearly metaphorical.
+
+Generative video:
+- context;
+- character performance;
+- metaphor;
+- non-evidence transitions.
+
+Never generate fake empirical charts, regression coefficients, sample statistics, or paper figures.
+
+## Core outputs
 
 ```text
 output/
 ├── paper.json
-├── research_map.json
 ├── evidence_map.json
-├── narrative.json
+├── narrative_plan.json
+├── script.md
+├── script.lock.md
 ├── storyboard.json
+├── manifest.json
 ├── assets/
-│   ├── figures/
-│   ├── tables/
-│   └── pages/
-├── scenes/
 ├── audio/
 ├── subtitles/
 ├── qa/
+│   ├── script_qa.json
+│   └── final_qa.json
+├── draft.mp4
 └── final.mp4
 ```
 
-## Style defaults
+## When the user asks for only part of the workflow
 
-Visual style should be restrained, professional, and publication-adjacent rather than promotional or cyberpunk.
+Do not force the full pipeline.
 
-Prefer:
-- strong typography
-- clean diagrams
-- readable plots
-- restrained transitions
-- consistent visual grammar
-- visible provenance for evidence-bearing visuals
+Examples:
+- "只写脚本" → run evidence + script stages only.
+- "只做分镜" → require or recover a locked script, then run storyboard.
+- "检查这版视频" → run QA only.
+- "从论文做完整视频" → run the full workflow.
 
-Avoid:
-- fabricated dashboards
-- decorative pseudo-data
-- excessive cinematic effects
-- illegible motion graphics
-- unsupported claims added for narrative drama
+Keep the orchestrator short. Put detailed reasoning rules in the specialist skills and shared references.

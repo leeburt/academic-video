@@ -1,109 +1,155 @@
 # Academic Video
 
-**Evidence-grounded agentic workflow for turning academic papers into research videos.**
+**Evidence-grounded, narrative-first workflow for turning academic papers into research videos.**
 
-Academic Video is an experimental open-source project for converting academic papers into short, accurate, visually clear research videos. The project is designed around a simple principle:
+Academic Video is an experimental open-source project for converting academic papers into short research videos that are both **scholarly accurate** and **worth watching**.
 
-> Generative models may explain the evidence, but they must not invent the evidence.
+The project follows four principles:
 
-Instead of treating paper-to-video as a single summarization prompt, Academic Video separates the workflow into structured stages:
+> **Evidence decides what can be said.**  
+> **The viewer's question decides when it should be said.**  
+> **The paper's native tension comes before an invented story.**  
+> **Generative models may explain evidence, but must not invent it.**
 
-1. **Paper parsing** — extract sections, figures, tables, equations, and page-level provenance.
-2. **Research mapping** — identify research questions, data, methods, findings, contributions, and limitations.
-3. **Evidence mapping** — link every empirical claim to its source in the paper.
-4. **Narrative planning** — convert the research structure into a concise video narrative.
-5. **Scene routing** — choose the appropriate renderer for each scene.
-6. **Rendering** — combine deterministic motion graphics, academic animation, and optional generative video.
-7. **Voice and captions** — synthesize narration and align subtitles.
-8. **Academic QA** — verify claims, numbers, directions, figures, and audiovisual integrity.
+## Why the repository is modular
 
-## Core design
+Paper analysis, script writing, storyboard design, rendering, and QA are different reasoning tasks. Instead of putting every rule into one giant prompt, the repository uses a small orchestrator plus specialist skills.
+
+```text
+academic-video
+│
+├── SKILL.md                           # workflow orchestrator
+├── skills/
+│   ├── academic-paper-evidence/       # paper parsing + evidence map
+│   ├── academic-video-script/         # narrative + script
+│   ├── academic-video-storyboard/     # scene/shot visual design
+│   ├── academic-video-production/     # rendering, TTS, captions, compose
+│   └── academic-video-qa/             # academic + narrative + AV QA
+├── references/                        # shared design rules
+├── schemas/                           # machine-readable contracts
+├── scripts/                           # executable helpers
+└── examples/
+```
+
+This keeps the main skill small and lets each specialist focus on one job.
+
+## Core workflow
 
 ```text
 paper.pdf
-   |
-   v
-Paper Parser
-   |
-   v
-Research Map + Evidence Map
-   |
-   v
-Narrative Planner
-   |
-   v
+   ↓
+Paper & Evidence
+   ↓
+Narrative & Script
+   ↓
 Storyboard
-   |
-   v
-Scene Router
-   |-----------------------------|
-   |              |              |
-   v              v              v
-Evidence       Diagram        Cinematic
-Scenes         Scenes         Scenes
-   |              |              |
-HyperFrames    Manim          Video model
-   |              |              |
-   |--------------|--------------|
-                  v
-               Composer
-                  |
-                  v
-              Academic QA
-                  |
-                  v
-              final.mp4
+   ↓
+Production
+   ↓
+Final QA
+   ↓
+final.mp4
 ```
 
-## Rendering policy
+### 1. Paper & Evidence
 
-Empirical evidence should use deterministic renderers whenever possible.
+Extract the research structure and create stable claim IDs with provenance.
 
-| Scene type | Preferred renderer |
+Outputs:
+- `paper.json`
+- `evidence_map.json`
+
+### 2. Narrative & Script
+
+Choose the core audience question, identify the paper's native tension, build an expectation–surprise progression, and write a concise spoken script.
+
+Outputs:
+- `narrative_plan.json`
+- `script.md`
+- `script.lock.md`
+
+### 3. Storyboard
+
+Translate the locked script into scenes and shots. Evidence visuals are source-faithful or deterministic; generative visuals are reserved for context and metaphor.
+
+Output:
+- `storyboard.json`
+
+### 4. Production
+
+Generate or extract assets, synthesize speech, align captions, render shots, and compose the draft.
+
+Outputs:
+- `assets/`
+- `manifest.json`
+- `draft.mp4`
+
+### 5. QA
+
+Check academic accuracy, narrative progression, visual provenance, continuity, captions, audio, and final encoding.
+
+Outputs:
+- `qa/script_qa.json`
+- `qa/final_qa.json`
+- `final.mp4`
+
+## Narrative design
+
+The project explicitly avoids turning a paper into a section-by-section summary.
+
+Avoid:
+
+```text
+background → data → method → finding 1 → finding 2 → finding 3 → limitation
+```
+
+Prefer:
+
+```text
+question
+→ expected answer
+→ actual finding
+→ surprise
+→ new question
+→ deeper finding
+→ revised understanding
+```
+
+A fictional story is optional. If the paper already contains a strong paradox or expectation reversal, that should drive the video.
+
+## Evidence policy
+
+Empirical claims must be traceable to the source paper.
+
+| Content | Preferred representation |
 |---|---|
-| Paper figure/table | HyperFrames / direct asset animation |
-| Numeric result | HyperFrames |
-| DID / event study / DAG / equations | Manim or HyperFrames |
-| Conceptual mechanism | HyperFrames / Manim |
-| Contextual or metaphorical scene | Generative video model |
-| Titles / takeaways / typography | HyperFrames |
+| Paper figure/table | Original asset or faithful animation |
+| Numeric result | Deterministic typography / chart |
+| DID / event study / equation | Manim / HyperFrames |
+| Conceptual mechanism | Deterministic diagram |
+| Context / metaphor / character acting | Generative video allowed |
+| Titles / takeaways | Deterministic typography |
 
-Generative video must **not** be used to fabricate regression coefficients, tables, empirical figures, sample sizes, or other evidence-bearing visuals.
+Generative video must **not** fabricate regression coefficients, tables, empirical figures, sample sizes, or other evidence-bearing visuals.
 
-## Planned open-source stack
+## Existing executable safety rule
+
+`scripts/route_scenes.py` fails closed when evidence-bearing claims are accidentally routed to a generative video renderer.
+
+## Planned / compatible stack
 
 - **Docling** — document structure extraction
-- **PyMuPDF** — precise page rendering and figure/table crops
-- **HyperFrames** — deterministic motion graphics and composition
-- **Manim Community** — academic and methodological animations
+- **PyMuPDF** — page rendering and crops
+- **HyperFrames** — deterministic motion graphics
+- **Manim Community** — methods and mathematical animation
 - **Qwen3-TTS / edge-tts** — narration
-- **WhisperX** — word-level alignment and subtitles
+- **WhisperX** — alignment and subtitles
 - **FFmpeg** — composition and encoding
 - Optional video backends: Seedance, Veo, Runway, Wan/ComfyUI
 
-## Development roadmap
-
-### V0 — End-to-end prototype
-PDF → extracted assets → narration → simple storyboard → deterministic render → MP4.
-
-### V1 — Evidence grounding
-Introduce claim IDs, evidence IDs, source provenance, and restrictions on generative visuals.
-
-### V2 — Scene router + social-science templates
-Add reusable templates for figures, tables, coefficients, DID, event studies, mechanisms, timelines, and takeaways.
-
-### V3 — Manim renderer
-Add methodological and mathematical animation support.
-
-### V4 — Generative video router
-Add provider adapters for contextual/cinematic scenes while preserving evidence restrictions.
-
-### V5 — Academic QA + regeneration
-Check claim support, numeric consistency, direction consistency, visual provenance, timing, captions, and rendering quality.
-
 ## Repository status
 
-Early-stage scaffold. The first implementation focuses on the evidence schema and routing logic before adding expensive video-generation backends.
+Early-stage scaffold. The current architecture prioritizes evidence contracts and narrative quality before expensive rendering backends.
 
 ## License
 
