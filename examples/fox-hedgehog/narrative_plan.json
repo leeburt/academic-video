@@ -1,0 +1,67 @@
+{
+  "core_question": "Is scientific breadth one strategy, or do different kinds of breadth produce different kinds of novelty?",
+  "viewer_promise": "By the end, the viewer should understand why drawing on broader knowledge and moving across more topics can push scientific novelty in opposite directions.",
+  "core_tension": "Breadth is usually treated as one general strategy, but knowledge-base breadth and topic breadth are associated with opposite novelty patterns.",
+  "core_surprise": "A broader knowledge base is associated with more integrative novelty but less disruption, while broader research topics show the reverse pattern.",
+  "final_takeaway": "Scientific breadth is not one-dimensional: where scholars search for knowledge and how widely they move across topics can produce different forms of novelty.",
+  "story_needed": false,
+  "hook_type": "expectation_reversal",
+  "hook": "We often ask whether great scientists are foxes or hedgehogs. But what if 'breadth' itself hides two very different strategies?",
+  "key_findings": [
+    "Greater knowledge-base breadth is associated with more integrative novelty and less disruption.",
+    "Greater research-topic breadth is associated with more disruption and less integrative novelty."
+  ],
+  "key_numbers": [
+    "7.13 million scholars",
+    "61.16 million author-year observations",
+    "19 disciplines"
+  ],
+  "method_needed": null,
+  "limitation": "The current example uses provisional project-summary evidence and should be replaced with page-level manuscript provenance before publication.",
+  "beats": [
+    {
+      "beat_id": "B01",
+      "viewer_state_before": "Breadth sounds like a single general trait.",
+      "question": "Are fox-like scientists simply broader in one overall sense?",
+      "expected_answer": "A scientist is either broadly exploratory or narrowly specialized.",
+      "new_information": "The framework separates breadth of knowledge sources from breadth of research topics.",
+      "surprise": "Two forms of breadth can vary independently.",
+      "viewer_state_after": "Breadth now has two dimensions.",
+      "next_question": "Do the two dimensions lead to the same kind of novelty?",
+      "claim_ids": ["C002"]
+    },
+    {
+      "beat_id": "B02",
+      "viewer_state_before": "The two breadth dimensions might still have similar effects.",
+      "question": "What happens when the knowledge base gets broader?",
+      "expected_answer": "More breadth should make work more disruptive.",
+      "new_information": "Knowledge-base breadth is associated with more integrative novelty and less disruption.",
+      "surprise": "Broader knowledge recombines more while disrupting less.",
+      "viewer_state_after": "One form of breadth favors integration rather than disruption.",
+      "next_question": "Does topic breadth behave the same way?",
+      "claim_ids": ["C003"]
+    },
+    {
+      "beat_id": "B03",
+      "viewer_state_before": "Topic breadth may behave like knowledge breadth.",
+      "question": "What happens when scholars move across more research topics?",
+      "expected_answer": "The same pattern should repeat.",
+      "new_information": "Topic breadth is associated with more disruption and less integrative novelty.",
+      "surprise": "The direction reverses.",
+      "viewer_state_after": "Different breadth strategies correspond to different novelty profiles.",
+      "next_question": "So what should we mean when we call a scientist a fox?",
+      "claim_ids": ["C004"]
+    },
+    {
+      "beat_id": "B04",
+      "viewer_state_before": "A single fox/hedgehog label now looks too crude.",
+      "question": "What is the broader implication?",
+      "expected_answer": null,
+      "new_information": "Scientific breadth is not one-dimensional.",
+      "surprise": null,
+      "viewer_state_after": "The viewer understands breadth as a two-dimensional strategy space.",
+      "next_question": null,
+      "claim_ids": ["C006"]
+    }
+  ]
+}
